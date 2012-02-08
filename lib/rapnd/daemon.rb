@@ -10,6 +10,7 @@ module Rapnd
     attr_accessor :redis, :host, :apple, :cert, :queue, :connected
     
     def initialize(options = {})
+      puts 'Initializing daemon...'
       options[:redis_host]  ||= 'localhost'
       options[:redis_port]  ||= '6379'
       options[:host]        ||= 'gateway.sandbox.push.apple.com'
@@ -21,6 +22,7 @@ module Rapnd
       @queue = options[:queue]
       @cert = options[:cert]
       @host = options[:host]
+      puts 'Initialized!'
     end
     
     def connect!

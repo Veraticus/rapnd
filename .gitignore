@@ -1,3 +1,5 @@
+*.pid
+
 # rcov generated
 coverage
 

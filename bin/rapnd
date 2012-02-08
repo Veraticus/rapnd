@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+ARGV << '--help' if ARGV.empty?
+
+require 'optparse'
+require 'rapnd'
+require 'daemons'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: rapnd [options]"
+
+  opts.on("--cert=MANDATORY", "Location of the cert pem file") do |cert|
+    options[:cert] = cert
+  end
+
+  opts.on("--password=OPTIONAL", "Password for the cert pem file") do |password|
+    options[:password] = password
+  end
+
+  opts.on("--redis_host=OPTIONAL", "Redis hostname") do |host|
+    options[:redis_host] = host
+  end
+  
+  opts.on("--redis_port=OPTIONAL", "Redis port") do |port|
+    options[:redis_port] = port
+  end
+  
+  opts.on("--environment=OPTIONAL", "Specify sandbox or production") do |env|
+    options[:env] = env
+  end
+  
+  opts.on("--queue=OPTIONAL", "Name of the redis queue") do |queue|
+    options[:queue] = queue
+  end
+  
+  opts.on("--foreground", "Run in the foreground") do |fore|
+    options[:foreground] = true
+  end
+  
+  opts.on('--help', 'Show help') do |help|
+    puts opts
+  end
+end.parse!
+
+raise 'Must include certfile location!' if options[:cert].nil?
+
+Daemons.daemonize unless options[:foreground]
+
+Rapnd::Daemon.new(options).run!
