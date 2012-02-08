@@ -1,0 +1,40 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
+    diff-lcs (1.1.3)
+    git (1.2.5)
+    hiredis (0.3.2)
+    jeweler (1.6.4)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+    metaclass (0.0.1)
+    mocha (0.10.3)
+      metaclass (~> 0.0.1)
+    rake (0.9.3.beta.1)
+    rcov (0.9.11)
+    redis (2.2.2)
+    rspec (2.8.0)
+      rspec-core (~> 2.8.0)
+      rspec-expectations (~> 2.8.0)
+      rspec-mocks (~> 2.8.0)
+    rspec-core (2.8.0)
+    rspec-expectations (2.8.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.8.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_support
+  bundler
+  hiredis (~> 0.3.1)
+  jeweler
+  mocha
+  rcov
+  redis (~> 2.2.0)
+  rspec

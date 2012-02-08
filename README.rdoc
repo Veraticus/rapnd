@@ -1,6 +1,6 @@
 = rapnd
 
-Description goes here.
+An extremely beta daemon that persists a connection to Apple's servers and sends messages to it, using redis for persistence.
 
 == Contributing to rapnd
  

@@ -8,5 +8,13 @@ require 'rapnd'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
-  
+  config.mock_with(:mocha)  
+  config.before(:suite) do
+    `redis-server #{File.dirname(__FILE__)}/redis-test.conf`
+  end
+  config.after(:suite) do
+    processes = `ps -A -o pid,command | grep [r]edis-test`.split("\n")
+    pids = processes.map { |process| process.split(" ")[0] }
+    pids.each { |pid| Process.kill("KILL", pid.to_i) }
+  end
 end
