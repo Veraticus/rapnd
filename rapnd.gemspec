@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
     "lib/rapnd.rb",
     "lib/rapnd/daemon.rb",
     "lib/rapnd/notification.rb",
+    "rapnd.gemspec",
     "spec/daemon_spec.rb",
     "spec/notification_spec.rb",
     "spec/redis-test.conf",
