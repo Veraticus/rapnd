@@ -29,7 +29,11 @@ OptionParser.new do |opts|
   end
   
   opts.on("--environment=OPTIONAL", "Specify sandbox or production") do |env|
-    options[:env] = env
+    if env == 'production'
+      options[:host] = 'gateway.push.apple.com'
+    else
+      options[:host] = 'gateway.sandbox.push.apple.com'
+    end
   end
   
   opts.on("--queue=OPTIONAL", "Name of the redis queue") do |queue|

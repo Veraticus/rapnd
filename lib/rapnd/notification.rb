@@ -3,21 +3,21 @@ module Rapnd
     attr_accessor :badge, :alert, :sound, :custom, :device_token
     
     def initialize(hash)
-      [:badge, :alert, :sound, :custom, :device_token].each do |k|
-        self.instance_variable_set("@#{k}".to_sym, hash[k]) if hash[k]
+      [:badge, :alert, :sound, :device_token].each do |k|
+        self.instance_variable_set("@#{k}".to_sym, hash.delete(k)) if hash[k]
       end
+      @custom = hash
       raise 'Must provide device token' if self.device_token.nil?
       self.device_token = self.device_token.delete(' ')
     end
     
     def payload
       p = Hash.new
-      [:badge, :alert, :sound, :custom].each do |k|
+      [:badge, :alert, :sound].each do |k|
         p[k] = send(k) if send(k)
       end
-      custom = p.delete(:custom)
       aps = {:aps => p}
-      aps.merge!(:custom => custom) if custom
+      aps.merge!(custom) if custom
       aps
     end
     
