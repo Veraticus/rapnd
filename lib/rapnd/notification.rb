@@ -3,10 +3,9 @@ module Rapnd
     attr_accessor :badge, :alert, :sound, :custom, :device_token
     
     def initialize(hash)
-      [:badge, :alert, :sound, :device_token].each do |k|
-        self.instance_variable_set("@#{k}".to_sym, hash.delete(k)) if hash[k]
+      [:badge, :alert, :sound, :device_token, :custom].each do |k|
+        self.instance_variable_set("@#{k}".to_sym, hash[k]) if hash[k]
       end
-      @custom = hash
       raise 'Must provide device token' if self.device_token.nil?
       self.device_token = self.device_token.delete(' ')
     end
