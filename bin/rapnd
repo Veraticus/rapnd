@@ -5,7 +5,8 @@ ARGV << '--help' if ARGV.empty?
 
 require 'optparse'
 require 'rapnd'
-require 'daemons'
+require 'rubygems' unless defined?(Gem)
+require 'forever'
 
 options = {}
 OptionParser.new do |opts|
@@ -44,8 +45,14 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-raise 'Must include certfile location!' if options[:cert].nil?
-
-Daemons.daemonize unless options[:foreground]
-
-Rapnd::Daemon.new(options).run!
+unless options[:foreground]
+  Forever.run do
+    log "#{options[:queue]}.log"
+    
+    on_ready do
+      Rapnd::Daemon.new(options).run!
+    end
+  end
+else
+  Rapnd::Daemon.new(options).run!
+end

@@ -1,4 +1,6 @@
 *.pid
+log/*
+tmp/*
 
 # rcov generated
 coverage
