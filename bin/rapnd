@@ -44,6 +44,10 @@ OptionParser.new do |opts|
     options[:foreground] = true
   end
   
+  opts.on("--dir=OPTIONAL", "Directory to start in") do |dir|
+    options[:dir] = dir
+  end
+  
   opts.on('--help', 'Show help') do |help|
     puts opts
   end
@@ -51,6 +55,7 @@ end.parse!
 
 unless options[:foreground]
   Forever.run do
+    dir options[:dir]
     log "#{options[:queue]}.log"
     
     on_ready do
