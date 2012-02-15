@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "rapnd"
   gem.homepage = "http://github.com/Veraticus/rapnd"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{redis APN daemon}
+  gem.description = %Q{redis APN daemon}
   gem.email = "veraticus@gmail.com"
   gem.authors = ["Josh Symonds"]
   # dependencies defined in Gemfile
