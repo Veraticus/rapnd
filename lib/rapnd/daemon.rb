@@ -22,7 +22,7 @@ module Rapnd
       @queue = options[:queue]
       @cert = options[:cert]
       @host = options[:host]
-      puts 'Initialized!'
+      puts "Listening on queue: #{self.queue}"
     end
     
     def connect!
@@ -43,11 +43,13 @@ module Rapnd
     end
     
     def run!
-      notification = Rapnd::Notification.new(Marshal.load(@redis.blpop(self.queue, 0).last))
-      puts 'Notification popped.'
-      self.connect! unless self.connected
-      puts "Sending Apple: #{notification.json_payload}"
-      self.apple.write(notification.to_bytes)
+      message = @redis.blpop(self.queue, 1)
+      if message
+        notification = Rapnd::Notification.new(Marshal.load(message.last))
+        self.connect! unless self.connected
+        puts "Sending Apple: #{notification.json_payload}"
+        self.apple.write(notification.to_bytes)
+      end
       self.run!
     end
   end
