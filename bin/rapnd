@@ -70,8 +70,10 @@ when 'start'
   Rapnd::Daemon.new(options).run!
 when 'stop'
   unless options[:foreground]
-    file = Daemons::PidFile.find_files("#{options[:dir]}/tmp", options[:queue]).first
-    pid = File.open(file) {|h| h.read}.to_i
-    `kill -9 #{pid}`
+    files = Daemons::PidFile.find_files("#{options[:dir]}/tmp", options[:queue])
+    files.each do |file|
+      pid = File.open(file) {|h| h.read}.to_i
+      `kill -9 #{pid}`
+    end
   end
 end
