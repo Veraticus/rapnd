@@ -7,6 +7,8 @@ require 'optparse'
 require 'rapnd'
 require 'daemons'
 
+command = ARGV.shift
+
 options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: rapnd [options]"
@@ -22,11 +24,11 @@ OptionParser.new do |opts|
   opts.on("--redis_host=OPTIONAL", "Redis hostname") do |host|
     options[:redis_host] = host
   end
-  
+
   opts.on("--redis_port=OPTIONAL", "Redis port") do |port|
     options[:redis_port] = port
   end
-  
+
   opts.on("--environment=OPTIONAL", "Specify sandbox or production") do |env|
     if env == 'production'
       options[:host] = 'gateway.push.apple.com'
@@ -34,33 +36,42 @@ OptionParser.new do |opts|
       options[:host] = 'gateway.sandbox.push.apple.com'
     end
   end
-  
+
   opts.on("--queue=OPTIONAL", "Name of the redis queue") do |queue|
     options[:queue] = queue
   end
-  
+
   opts.on("--foreground", "Run in the foreground") do |fore|
     options[:foreground] = true
   end
-  
+
   opts.on("--dir=OPTIONAL", "Directory to start in") do |dir|
     options[:dir] = dir
   end
-  
+
   opts.on('--help', 'Show help') do |help|
     puts opts
   end
 end.parse!
 
-unless options[:foreground]
-  Daemons.daemonize(
-    :app_name => options[:queue],
-    :dir_mode => :normal,
-    :dir => "#{options[:dir]}/tmp",
-    :log_dir => "#{options[:dir]}/log",
-    :backtrace => true,
-    :log_output => true
-  )
-end
+case command
+when 'start'
+  unless options[:foreground]
+    Daemons.daemonize(
+      :app_name => options[:queue],
+      :dir_mode => :normal,
+      :dir => "#{options[:dir]}/tmp",
+      :log_dir => "#{options[:dir]}/log",
+      :backtrace => true,
+      :log_output => true
+    )
+  end
 
-Rapnd::Daemon.new(options).run!
+  Rapnd::Daemon.new(options).run!
+when 'stop'
+  unless options[:foreground]
+    file = Daemons::PidFile.find_files("#{options[:dir]}/tmp", options[:queue]).first
+    pid = File.open(file) {|h| h.read}.to_i
+    `kill -9 #{pid}`
+  end
+end
