@@ -5,8 +5,7 @@ ARGV << '--help' if ARGV.empty?
 
 require 'optparse'
 require 'rapnd'
-require 'rubygems' unless defined?(Gem)
-require 'forever'
+require 'daemons'
 
 options = {}
 OptionParser.new do |opts|
@@ -54,14 +53,14 @@ OptionParser.new do |opts|
 end.parse!
 
 unless options[:foreground]
-  Forever.run do
-    dir options[:dir]
-    log "#{options[:queue]}.log"
-    
-    on_ready do
-      Rapnd::Daemon.new(options).run!
-    end
-  end
-else
-  Rapnd::Daemon.new(options).run!
+  Daemons.daemonize(
+    :app_name => options[:queue],
+    :dir_mode => :normal,
+    :dir => "#{options[:dir]}/tmp",
+    :log_dir => "#{options[:dir]}/log",
+    :backtrace => true,
+    :log_output => true
+  )
 end
+
+Rapnd::Daemon.new(options).run!
