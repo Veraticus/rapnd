@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "Rapnd::Notification" do
   before do
-    @notification = Rapnd::Notification.new(:badge => 99, :alert => 'Big test time', :custom => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
+    @notification = Rapnd::Notification.new(:badge => 99, :alert => 'Big test time', :custom_properties => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
   end
   
   it 'removes whitespace from the device token' do
@@ -10,14 +10,14 @@ describe "Rapnd::Notification" do
   end
   
   it 'does not set the body key if only an alert is passed' do
-    @notification = Rapnd::Notification.new(:alert => 'Big test time', :custom => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
+    @notification = Rapnd::Notification.new(:alert => 'Big test time', :custom_properties => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
     
     @notification.payload.should == {:aps => {:alert => "Big test time"}, :key => "This is a test!", :spid => 1234}
   end
   
   it "automatically assigns hash variables to instance variables" do
     @notification.badge.should == 99
-    @notification.custom.should == {:key => 'This is a test!', :spid => 1234}
+    @notification.custom_properties.should == {:key => 'This is a test!', :spid => 1234}
   end
   
   it 'creates a hash payload' do
