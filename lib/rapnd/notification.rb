@@ -11,9 +11,13 @@ module Rapnd
     end
     
     def payload
-      p = Hash.new
-      [:badge, :alert, :sound].each do |k|
-        p[k] = send(k) if send(k)
+      if badge.nil? && sound.nil?
+        p = alert
+      else
+        p = Hash.new
+        [:badge, :alert, :sound].each do |k|
+          p[k] = send(k) if send(k)
+        end
       end
       aps = {:aps => p}
       aps.merge!(custom) if custom
