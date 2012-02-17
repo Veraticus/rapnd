@@ -12,7 +12,7 @@ describe "Rapnd::Notification" do
   it 'does not set the body key if only an alert is passed' do
     @notification = Rapnd::Notification.new(:alert => 'Big test time', :custom => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
     
-    @notification.payload.should == {:aps => "Big test time", :key => "This is a test!", :spid => 1234}
+    @notification.payload.should == {:aps => {:alert => "Big test time"}, :key => "This is a test!", :spid => 1234}
   end
   
   it "automatically assigns hash variables to instance variables" do
