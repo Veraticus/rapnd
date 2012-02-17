@@ -48,6 +48,10 @@ OptionParser.new do |opts|
   opts.on("--dir=OPTIONAL", "Directory to start in") do |dir|
     options[:dir] = dir
   end
+  
+  opts.on("--airbrake=OPTIONAL", "Airbrake API key") do |airbrake|
+    options[:airbrake] = airbrake
+  end
 
   opts.on('--help', 'Show help') do |help|
     puts opts

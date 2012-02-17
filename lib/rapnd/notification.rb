@@ -6,7 +6,7 @@ module Rapnd
       [:badge, :alert, :sound, :device_token, :custom].each do |k|
         self.instance_variable_set("@#{k}".to_sym, hash[k]) if hash[k]
       end
-      raise 'Must provide device token' if self.device_token.nil?
+      raise "Must provide device token: #{hash}" if self.device_token.nil?
       self.device_token = self.device_token.delete(' ')
     end
     
@@ -26,7 +26,7 @@ module Rapnd
     
     def json_payload
       j = ActiveSupport::JSON.encode(payload)
-      raise PayloadInvalid.new("The payload is larger than allowed: #{j.length}") if j.size > 256
+      raise "The payload #{j} is larger than allowed: #{j.length}" if j.size > 256
       j
     end
     
