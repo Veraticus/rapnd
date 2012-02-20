@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
-gem "hiredis", "~> 0.3.1"
-gem "redis", "~> 2.2.0", :require => ["redis/connection/hiredis", "redis"]
+gem "hiredis", "~> 0.4.4"
+gem "redis", "~> 2.2.2", :require => ["redis/connection/hiredis", "redis"]
 gem 'activesupport'
 gem 'daemons', '1.1.6'
 gem 'i18n'
