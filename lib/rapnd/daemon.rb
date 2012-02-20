@@ -61,6 +61,7 @@ module Rapnd
             @logger.info "Shutting down..."
             exit(0)
           end
+          self.connect!
           Airbrake.notify(e, {:environment_name => self.queue }) if @airbrake
           @logger.error "Encountered error: #{e}"
         end
