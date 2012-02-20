@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "rapnd"
-  s.version = "0.2.3"
+  s.version = "0.2.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Symonds"]
-  s.date = "2012-02-17"
+  s.date = "2012-02-20"
   s.description = "redis APN daemon"
   s.email = "veraticus@gmail.com"
   s.executables = ["rapnd"]
