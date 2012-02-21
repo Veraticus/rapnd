@@ -9,7 +9,7 @@ Each rapnd daemon operates on a separate resque queue, and multiple daemons can 
 ## Daemon usage
 
 ```
-Usage: rapnd [options]
+Usage: rapnd start [options]
         --cert=MANDATORY             Location of the cert pem file
         --password=OPTIONAL          Password for the cert pem file
         --redis_host=OPTIONAL        Redis hostname
@@ -21,6 +21,8 @@ Usage: rapnd [options]
         --airbrake=OPTIONAL          Airbrake API key
         --help                       Show help
 ```
+
+You can use ```rapnd stop``` instead of start in order to kill a running daemon with the options you provide.
 
 ## Client usage
 
