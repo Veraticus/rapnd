@@ -5,17 +5,17 @@
 
 Gem::Specification.new do |s|
   s.name = "rapnd"
-  s.version = "0.2.5"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Josh Symonds"]
-  s.date = "2012-02-20"
+  s.date = "2012-02-21"
   s.description = "redis APN daemon"
   s.email = "veraticus@gmail.com"
   s.executables = ["rapnd"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.markdown"
   ]
   s.files = [
     ".document",
@@ -23,16 +23,19 @@ Gem::Specification.new do |s|
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.markdown",
     "Rakefile",
     "VERSION",
     "bin/rapnd",
     "lib/rapnd.rb",
+    "lib/rapnd/config.rb",
     "lib/rapnd/daemon.rb",
     "lib/rapnd/notification.rb",
     "rapnd.gemspec",
+    "spec/config_spec.rb",
     "spec/daemon_spec.rb",
     "spec/notification_spec.rb",
+    "spec/rapnd_spec.rb",
     "spec/redis-test.conf",
     "spec/spec_helper.rb"
   ]
