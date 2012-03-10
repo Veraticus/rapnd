@@ -50,14 +50,22 @@ module Rapnd
       loop do
         begin
           message = @redis.blpop(self.queue, 1)
-          send_message(message) if message
+          if message
+            notification = Rapnd::Notification.new(Marshal.load(message.last))
+            self.connect! unless self.connected
+            @logger.info "Sending Apple: #{notification.json_payload}"
+            self.apple.write(notification.to_bytes)
+          end
         rescue Exception => e
           if e.class == Interrupt || e.class == SystemExit
             @logger.info "Shutting down..."
             exit(0)
           end
           self.connect!
-          send_message(message) if message
+          if notification
+            @logger.info "Trying again for: #{notification.json_payload}"
+            self.apple.write(notification.to_bytes)
+          end
           Airbrake.notify(e, {:environment_name => self.queue }) if @airbrake
           @logger.error "Encountered error: #{e}"
         end
@@ -66,9 +74,6 @@ module Rapnd
   end
   
   def send_message(message)
-    notification = Rapnd::Notification.new(Marshal.load(message.last))
-    self.connect! unless self.connected
-    @logger.info "Sending Apple: #{notification.json_payload}"
-    self.apple.write(notification.to_bytes)
+    
   end
 end
