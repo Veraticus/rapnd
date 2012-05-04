@@ -1,6 +1,6 @@
 module Rapnd
   class Notification
-    attr_accessor :badge, :alert, :sound, :custom_properties, :device_token
+    attr_accessor :badge, :alert, :sound, :'content-available', :custom_properties, :device_token
     
     def initialize(hash)
       [:badge, :alert, :sound, :device_token, :custom_properties].each do |k|
@@ -12,7 +12,7 @@ module Rapnd
     
     def payload
       p = Hash.new
-      [:badge, :alert, :sound].each do |k|
+      [:badge, :alert, :sound, :'content-available'].each do |k|
         p[k] = send(k) if send(k)
       end
       aps = {:aps => p}

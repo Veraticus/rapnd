@@ -53,7 +53,7 @@ module Rapnd
           if message
             notification = Rapnd::Notification.new(Marshal.load(message.last))
             self.connect! unless self.connected
-            @logger.info "Sending Apple: #{notification.json_payload}"
+            @logger.info "Sending #{notification.device_token}: #{notification.json_payload}"
             self.apple.write(notification.to_bytes)
           end
         rescue Exception => e
