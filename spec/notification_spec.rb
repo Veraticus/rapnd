@@ -9,6 +9,12 @@ describe "Rapnd::Notification" do
     @notification.device_token.should == '12345'
   end
   
+  it 'sets a content-available' do    
+    @notification = Rapnd::Notification.new(:alert => 'Big test time', :content_available => "Yes!", :custom_properties => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
+    
+    @notification.payload.should == {:aps => {:alert => "Big test time", :'content-available' => "Yes!"}, :key => "This is a test!", :spid => 1234}
+  end
+  
   it 'does not set the body key if only an alert is passed' do
     @notification = Rapnd::Notification.new(:alert => 'Big test time', :custom_properties => {:key => 'This is a test!', :spid => 1234}, :device_token => '1234 5')
     
