@@ -21,7 +21,10 @@ module Rapnd
       
       Airbrake.configure { |config| config.api_key = options[:airbrake]; @airbrake = true; } if options[:airbrake]
       
-      @redis = Redis.new(:host => options[:redis_host], :port => options[:redis_port])
+      redis_options = { :host => options[:redis_host], :port => options[:redis_port] }
+      redis_options[:password] = options[:redis_password] if options.has_key?(:redis_password)
+      
+      @redis = Redis.new(redis_options)
       @queue = options[:queue]
       @cert = options[:cert]
       @host = options[:host]
