@@ -29,8 +29,8 @@ OptionParser.new do |opts|
     options[:redis_port] = port
   end
   
-  opts.on("--redis_password=OPTIONAL", "Redis password") do |port|
-    options[:redis_password] = port
+  opts.on("--redis_password=OPTIONAL", "Redis password") do |redis_password|
+    options[:redis_password] = redis_password
   end
 
   opts.on("--environment=OPTIONAL", "Specify sandbox or production") do |env|
