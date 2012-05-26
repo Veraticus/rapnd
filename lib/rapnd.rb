@@ -11,7 +11,7 @@ module Rapnd
   end
   
   def redis
-    @redis ||= Redis.new(:host => Rapnd.config.redis_host, :port => Rapnd.config.redis_port)
+    @redis ||= Redis.new(:host => Rapnd.config.redis_host, :port => Rapnd.config.redis_port, :password => Rapnd.config.redis_password)
   end
   
   def configure
