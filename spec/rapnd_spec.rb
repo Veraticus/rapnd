@@ -14,7 +14,7 @@ describe "Rapnd" do
     Rapnd.queue('test_queue', {:alert => 'Hi!'})
     
     @redis.llen('test_queue').should == 1
-    Marshal.load(@redis.lpop('test_queue')).should == {:alert => 'Hi!'}
+    JSON(@redis.lpop('test_queue')).symbolize_keys.should == {:alert => 'Hi!'}
   end
   
   it 'gets a redis connection' do
