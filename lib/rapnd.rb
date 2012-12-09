@@ -7,7 +7,7 @@ module Rapnd
   extend self
   
   def queue(queue_name, message)
-    self.redis.lpush(queue_name, Marshal.dump(message))
+    self.redis.lpush(queue_name, message.to_json)
   end
   
   def redis
